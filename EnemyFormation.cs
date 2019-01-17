@@ -7,7 +7,7 @@ namespace Asteroids {
 
         public abstract int TotalTime { get; }
 
-        public abstract string Key { get; }
+        public abstract string Key { get; set;}
 
         public abstract IList<Vector2> GetSpawnList(double from, double to);
 

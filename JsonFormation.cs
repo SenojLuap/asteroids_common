@@ -13,11 +13,11 @@ namespace Asteroids.Common {
 
         public IList<Tuple<int, Vector2>> schedule;
 
-        public string key;
 
         public JsonFormation() : base() {
             schedule = new List<Tuple<int, Vector2>>();
         }
+
 
         public override int TotalTime {
             get {
@@ -27,9 +27,12 @@ namespace Asteroids.Common {
             }
         }
 
+
         public override string Key {
             get => key;
+            set { key = value; }
         }
+
 
         public override IList<Vector2> GetSpawnList(double from, double to) {
             List<Vector2> res = schedule.Where(item => ((double)item.Item1 >= from && (double)item.Item1 <= to))
@@ -38,6 +41,8 @@ namespace Asteroids.Common {
             return res;
         }
 
+
+        private string key;
 
         /// <summary>
         /// Stream the formation to stream.
@@ -57,11 +62,17 @@ namespace Asteroids.Common {
             return true;
         }
 
-        public static JsonFormation FromStream(string fileUri) {
+
+        /// <summary>
+        /// Deserialize a JsonFormation from stream
+        /// </summary>
+        /// <param name="inStream">The stream to deserialize from</param>
+        /// <returns>The parsed JsonFormation</returns>
+        public static JsonFormation FromStream(Stream inStream) {
             var res = new JsonFormation();
             try {
-                using (var reader = new BinaryReader(File.OpenRead(fileUri))) {
-                    res.key = reader.ReadString();
+                using (var reader = new BinaryReader(inStream)) {
+                    res.Key = reader.ReadString();
                     var numEntries = reader.ReadInt32();
                     res.schedule = new List<Tuple<int, Vector2>>(numEntries);
                     for (int i = 0; i < numEntries; i++) {
