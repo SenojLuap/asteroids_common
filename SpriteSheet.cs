@@ -85,7 +85,6 @@ namespace Asteroids.Common {
                 res.Offset = new Point(offsetX, offsetY);
                 return res;
             }
-            return null;
         }
 
 
