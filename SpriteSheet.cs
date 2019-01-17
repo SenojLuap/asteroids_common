@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 
 namespace Asteroids.Common {
-    public partial class SpriteSheet {
+    public class SpriteSheet {
 
         /// <summary>
         /// The asset file name being referenced.
@@ -83,6 +83,7 @@ namespace Asteroids.Common {
                 int offsetX = reader.ReadInt32();
                 int offsetY = reader.ReadInt32();
                 res.Offset = new Point(offsetX, offsetY);
+                return res;
             }
             return null;
         }
@@ -114,6 +115,62 @@ namespace Asteroids.Common {
                 return true;
             }
             return false;
+        }
+
+
+        /// <summary>
+        /// Create a context with which to use the sprite sheet.
+        /// </summary>
+        public SpriteSheetContext CreateContext() {
+            return new SpriteSheetContext(this);
+        }
+
+
+        public class SpriteSheetContext {
+
+            /// <summary>
+            /// The sprite sheet that generated the context.
+            /// </summary>
+            public SpriteSheet SpriteSheet { get; internal set; }
+
+
+            /// <summary>
+            /// The frame to draw.
+            /// </summary>
+            public int Frame {
+                get => frame;
+                set {
+                    frame = value;
+                    FrameChanged();
+                }
+            }
+
+            #region Private Fields
+
+            /// <summary>
+            /// THe frame to draw;
+            /// </summary>
+            private int frame;
+
+
+            /// <summary>
+            /// The section of the sprite sheet to draw.
+            /// </summary>
+            private Rectangle sourceRect;
+
+            #endregion
+
+            internal SpriteSheetContext(SpriteSheet parent) {
+                SpriteSheet = parent;
+                Frame = 0;
+            }
+
+
+            private void FrameChanged() {
+                var framesPerRow = SpriteSheet.Texture.Width / SpriteSheet.FrameWidth;
+                sourceRect = new Rectangle((frame % framesPerRow) * SpriteSheet.FrameWidth,
+                    (frame / framesPerRow) * SpriteSheet.FrameHeight, SpriteSheet.FrameWidth, SpriteSheet.FrameHeight);
+            }
         }
     }
 }
