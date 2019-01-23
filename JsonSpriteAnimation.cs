@@ -17,7 +17,7 @@ namespace Asteroids.Common {
         /// <summary>
         /// The frames to display, and the time to display them, in seconds.
         /// </summary>
-        public Frame Frames { get; private set; }
+        public Frame Frames { get; set; }
 
 
         /// <summary>
