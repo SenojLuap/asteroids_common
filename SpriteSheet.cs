@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 
 using Microsoft.Xna.Framework;
@@ -143,6 +144,23 @@ namespace Asteroids.Common {
                     FrameChanged();
                 }
             }
+
+
+            /// <summary>
+            /// The rendered width of the sprite.
+            /// </summary>
+            public int Width {
+                get => (int)Math.Round(SpriteSheet.FrameWidth * Transform.Scale);
+            }
+
+
+            /// <summary>
+            /// The rendered height of the sprite.
+            /// </summary>
+            public int Height {
+                get => (int)Math.Round(SpriteSheet.FrameHeight * Transform.Scale);
+            }
+
 
             /// <summary>
             /// The transformation applied to the sprite when drawn

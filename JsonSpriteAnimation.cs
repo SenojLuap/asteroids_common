@@ -93,10 +93,9 @@ namespace Asteroids.Common {
 
             /// <summary>
             /// The current width of the animation, in pixels.
-            /// Ignores Transform.
             /// </summary>
             public int Width {
-                get => SpriteSheetContext.SpriteSheet.FrameWidth;
+                get => SpriteSheetContext.Width;
                 set {
                     throw new NotSupportedException();
                 }
@@ -105,10 +104,9 @@ namespace Asteroids.Common {
 
             /// <summary>
             /// The current height of the animation, in pixels.
-            /// Ignores Transform.
             /// </summary>
             public int Height {
-                get => SpriteSheetContext.SpriteSheet.FrameHeight;
+                get => SpriteSheetContext.Height;
                 set {
                     throw new NotSupportedException();
                 }

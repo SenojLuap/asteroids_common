@@ -18,14 +18,12 @@ namespace Asteroids.Common {
 
         /// <summary>
         /// The current width of the animation, in pixels.
-        /// Ignores Transform.
         /// </summary>
         int Width { get; set; }
 
 
         /// <summary>
         /// The current height of the animation, in pixels.
-        /// Ignores Transform.
         /// </summary>
         int Height { get; set; }
 
