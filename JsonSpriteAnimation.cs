@@ -78,9 +78,30 @@ namespace Asteroids.Common {
 
         public class JsonSpriteAnimationContext : ISpriteAnimationContext {
 
+
+            /// <summary>
+            /// The time scale applied to the animation.
+            /// </summary>
             public double TimeScale { get; set; } = 1.0;
 
+
+            /// <summary>
+            /// The current frame of the animation.
+            /// </summary>
             public Frame CurrentFrame { get; set; }
+
+
+            /// <summary>
+            /// The transform applied to the animation.
+            /// </summary>
+            public Transform Transform {
+                get => SpriteSheetContext.Transform;
+                set
+                {
+                    SpriteSheetContext.Transform = value;
+                }
+            }
+
 
             #region Private Fields
 
@@ -91,13 +112,6 @@ namespace Asteroids.Common {
 
             #endregion
 
-            public Transform Transform {
-                get => SpriteSheetContext.Transform;
-                set
-                {
-                    SpriteSheetContext.Transform = value;
-                }
-            }
 
             internal JsonSpriteAnimationContext(JsonSpriteAnimation animation) {
                 SpriteSheetContext = animation.SpriteSheet.CreateContext();
