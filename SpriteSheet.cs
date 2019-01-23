@@ -120,7 +120,7 @@ namespace Asteroids.Common {
         /// <summary>
         /// Create a context with which to use the sprite sheet.
         /// </summary>
-        public SpriteSheetContext CreateContext() {
+        virtual public SpriteSheetContext CreateContext() {
             return new SpriteSheetContext(this);
         }
 
@@ -144,6 +144,11 @@ namespace Asteroids.Common {
                 }
             }
 
+            /// <summary>
+            /// The transformation applied to the sprite when drawn
+            /// </summary>
+            public Transform Transform { get; set; }
+
             #region Private Fields
 
             /// <summary>
@@ -162,6 +167,7 @@ namespace Asteroids.Common {
             internal SpriteSheetContext(SpriteSheet parent) {
                 SpriteSheet = parent;
                 Frame = 0;
+                Transform = new Transform();
             }
 
 
@@ -169,6 +175,17 @@ namespace Asteroids.Common {
                 var framesPerRow = SpriteSheet.Texture.Width / SpriteSheet.FrameWidth;
                 sourceRect = new Rectangle((frame % framesPerRow) * SpriteSheet.FrameWidth,
                     (frame / framesPerRow) * SpriteSheet.FrameHeight, SpriteSheet.FrameWidth, SpriteSheet.FrameHeight);
+            }
+
+
+            /// <summary>
+            /// Draw the sprite to the sprite batch
+            /// </summary>
+            /// <param name="spriteBatch">The sprite batch to draw to</param>
+            public void Draw(SpriteBatch spriteBatch) {
+                spriteBatch.Draw(SpriteSheet.Texture, Transform.Position, sourceRect, Color.White,
+                        Transform.Rotation, Vector2.Zero, Transform.ScaleVector, SpriteEffects.None,
+                        0);
             }
         }
     }

@@ -1,4 +1,5 @@
-
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Asteroids.Common {
 
@@ -8,5 +9,20 @@ namespace Asteroids.Common {
         /// </summary>
         public virtual string Key { get; set; }
 
+
+        /// <summary>
+        /// Create a context for utilizing an animation
+        /// </summary>
+        /// <returns>The generated context</returns>
+        public abstract ISpriteAnimationContext CreateContext();
+
+
+
+        public interface ISpriteAnimationContext {
+
+            void Update(GameTime delta);
+
+            void Draw(SpriteBatch spriteBatch);
+        }
     }
 }
