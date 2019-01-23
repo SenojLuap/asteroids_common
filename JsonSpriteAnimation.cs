@@ -186,36 +186,52 @@ namespace Asteroids.Common {
 
                 var bounce = reader.ReadBoolean();
                 int numFrames = reader.ReadInt32();
-                Frame lastFrame = null;
-                Frame lastBounceFrame = null;
+
+                var frames = new List<(int, double)>();
                 for (int i = 0; i < numFrames; i++) {
                     int frame = reader.ReadInt32();
                     double frameLength = reader.ReadDouble();
-                    var newFrame = new Frame(frame, frameLength);
-
-                    if (lastFrame == null) {
-                        res.Frames = newFrame;
-                        lastBounceFrame = newFrame;
-                    }
-                    else {
-                        lastFrame.Next = newFrame;
-                        if (bounce) {
-                            var newBounceFrame = new Frame(frame, frameLength);
-                            newBounceFrame.Next = lastBounceFrame;
-                            lastBounceFrame = newBounceFrame;
-                        }
-                    }
-                    lastFrame = newFrame;
+                    frames.Add((frame, frameLength));
                 }
-
-                if (bounce) {
-                    lastFrame.Next = lastBounceFrame.Next;
-                } else {
-                    lastFrame.Next = res.Frames;
-                }
+                res.Frames = CreateFrames(bounce, frames.ToArray());
 
                 return res;
             }
+        }
+
+
+        public static Frame CreateFrames(bool bounce, (int, double)[] frames) {
+            Frame firstFrame = null;
+            Frame lastFrame = null;
+            Frame lastBounceFrame = null;
+
+            foreach (var frameInfo in frames) {
+                int frame = frameInfo.Item1;
+                double frameLength = frameInfo.Item2;
+                var newFrame = new Frame(frame, frameLength);
+
+                if (lastFrame == null) {
+                    firstFrame = newFrame;
+                    lastBounceFrame = newFrame;
+                }
+                else {
+                    lastFrame.Next = newFrame;
+                    if (bounce) {
+                        var newBounceFrame = new Frame(frame, frameLength);
+                        newBounceFrame.Next = lastBounceFrame;
+                        lastBounceFrame = newBounceFrame;
+                    }
+                }
+                lastFrame = newFrame;
+            }
+
+            if (bounce) {
+                lastFrame.Next = lastBounceFrame.Next;
+            }
+            else {
+                lastFrame.Next = firstFrame;
+            }
+            return firstFrame;
         }
 
         #endregion
