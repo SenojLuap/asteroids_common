@@ -15,7 +15,7 @@ namespace Asteroids.Common {
             }
         }
 
-        private Vector2 scaleVector;
+        private Vector2 scaleVector = new Vector2(1.0f);
         public Vector2 ScaleVector { get => scaleVector; }
     }
 }
